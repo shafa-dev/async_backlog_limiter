@@ -1,5 +1,9 @@
 # Async Backlog Limiter
 
+[![codecov](https://codecov.io/gh/shafa-dev/async_backlog_limiter/graph/badge.svg?token=O0ECTVM8GC)](https://codecov.io/gh/shafa-dev/async_backlog_limiter)
+[![PyPI](https://img.shields.io/pypi/v/async_backlog_limiter)](https://pypi.org/project/async_backlog_limiter/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/async_backlog_limiter)](https://pypi.org/project/async_backlog_limiter/)
+
 A lightweight, zero-dependency Python library to limit concurrent execution and queue size of asynchronous tasks — simulating a TCP-style backlog for async servers, job runners, or microservices to ensure overload protection.
 
 

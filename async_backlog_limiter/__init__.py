@@ -46,6 +46,8 @@ def AsyncBacklogLimiter(
     Raises:
         ValueError: If capacity or queue_limit values are invalid.
         RateLimitExceeded: If the queue is full and cannot accept more tasks.
+
+    If the queue is full and cannot accept more tasks. If the queue is full and cannot accept more tasks. If the queue is full and cannot accept more tasks.
     """
     if capacity <= 0:
         raise ValueError("Capacity must be greater than zero.")
