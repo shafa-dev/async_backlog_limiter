@@ -1,18 +1,13 @@
-name: Release
+name: Upload Python Package
 
 on:
   push:
     tags:
       - 'v*'
 
-concurrency:
-  group: tag-release-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   release:
     runs-on: ubuntu-20.04
-    needs: detect-release-parameters
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
