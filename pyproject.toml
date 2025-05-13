@@ -1,0 +1,79 @@
+[project]
+name = "async-backlog-limiter"
+version = "0.1.0"
+description = "Async concurrency and queue limiter with server-style backlog control."
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+
+    "Framework :: AsyncIO",
+
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+
+    "Topic :: Internet",
+    "Topic :: Utilities",
+    "Topic :: Software Development :: Libraries",
+
+    "Typing :: Typed"
+]
+keywords = [
+  "asyncio",
+  "rate limiter",
+  "concurrency",
+  "backlog",
+  "throttling",
+  "limiter",
+]
+
+[project.urls]
+Homepage = "https://github.com/shafa-dev/async_backlog_limiter"
+Documentation = "https://github.com/shafa-dev/async_backlog_limiter/blob/main/README.md"
+Source = "https://github.com/shafa-dev/async_backlog_limiter"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 79
+
+[tool.isort]
+line_length = 80
+multi_line_output = 3
+include_trailing_comma = true
+use_parentheses = true
+ensure_newline_before_comments = true
+force_grid_wrap = 2
+extend_skip_glob = ["*/migrations/*", "env/*"]
+
+[tool.flake8]
+max-line-length = 80
+max-complexity = 12
+exclude = [
+    ".git",
+    "env/",
+]
+
+[tool.bandit]
+exclude_dirs = ["env", ".cache", "tests", ".mypy_cache"]
+
+[tool.mypy]
+ignore_missing_imports = true
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_untyped_defs = true
+follow_imports = "silent"
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = "*.tests.*"
+ignore_errors = true
