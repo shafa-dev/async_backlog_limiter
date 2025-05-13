@@ -50,9 +50,7 @@ jobs:
     - name: Generate coverage report
       run: coverage run --branch -m unittest discover -s tests && coverage xml
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./coverage.xml
-        flags: unittests
         slug: shafa-dev/async_backlog_limiter
