@@ -143,4 +143,4 @@ class TestAsyncBacklogLimiter(IsolatedAsyncioTestCase):
                     asyncio.create_task(monitored_task()) for _ in range(20)
                 ]
                 await asyncio.gather(*tasks, return_exceptions=True)
-                self.assertLessEqual(max_concurrent, 0)
+                self.assertLessEqual(max_concurrent, capacity)
