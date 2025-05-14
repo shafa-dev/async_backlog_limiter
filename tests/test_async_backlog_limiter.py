@@ -4,6 +4,7 @@ from unittest import IsolatedAsyncioTestCase
 from async_backlog_limiter import (
     AsyncBacklogLimiter,
     RateLimitExceeded,
+    Stats,
 )
 
 
@@ -144,3 +145,51 @@ class TestAsyncBacklogLimiter(IsolatedAsyncioTestCase):
                 ]
                 await asyncio.gather(*tasks, return_exceptions=True)
                 self.assertLessEqual(max_concurrent, capacity)
+
+    def test_repr(self):
+        limiter = AsyncBacklogLimiter(5, 10)
+
+        self.assertEqual(
+            repr(limiter), "<AsyncBacklogLimiter capacity=5 queue_limit=10>"
+        )
+        self.assertEqual(
+            str(limiter), "<AsyncBacklogLimiter capacity=5 queue_limit=10>"
+        )
+
+    async def test_stats(self):
+        limiter = AsyncBacklogLimiter(5, 10)
+
+        self.assertEqual(limiter.stats(), Stats(0, 0))
+
+        async def task():
+            async with limiter():
+                await asyncio.sleep(0.2)
+                return True
+
+        # Helper to schedule multiple tasks
+        def schedule_tasks(n):
+            return [asyncio.create_task(task()) for _ in range(n)]
+
+        # Schedule first 5 tasks: should all become active
+        tasks = schedule_tasks(5)
+        await asyncio.sleep(0)
+        self.assertEqual(limiter.stats(), Stats(active=5, pending=0))
+
+        # Add 4 more: should go to pending
+        tasks += schedule_tasks(4)
+        await asyncio.sleep(0)
+        self.assertEqual(limiter.stats(), Stats(active=5, pending=4))
+
+        # Add 4 more: only 1 fits in the queue, 3 should be rejected later
+        tasks += schedule_tasks(4)
+        await asyncio.sleep(0)
+        self.assertEqual(limiter.stats(), Stats(active=5, pending=5))
+
+        # Wait for all tasks to complete
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+
+        successes = [r for r in results if r is True]
+        failures = [r for r in results if isinstance(r, RateLimitExceeded)]
+
+        self.assertEqual(len(successes), 10)
+        self.assertEqual(len(failures), 3)
