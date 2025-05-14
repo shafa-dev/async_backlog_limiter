@@ -1,9 +1,8 @@
-[project]
+[tool.poetry]
 name = "async-backlog-limiter"
-version = "0.1.2"
+version = "0.1.3"
 description = "Async concurrency and queue limiter with server-style backlog control."
 readme = "README.md"
-requires-python = ">=3.12"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
 
@@ -31,11 +30,13 @@ keywords = [
   "throttling",
   "limiter",
 ]
+license = "MIT"
+homepage = "https://github.com/shafa-dev/async_backlog_limiter"
+documentation = "https://github.com/shafa-dev/async_backlog_limiter/blob/main/README.md"
+repository = "https://github.com/shafa-dev/async_backlog_limiter"
 
-[project.urls]
-Homepage = "https://github.com/shafa-dev/async_backlog_limiter"
-Documentation = "https://github.com/shafa-dev/async_backlog_limiter/blob/main/README.md"
-Source = "https://github.com/shafa-dev/async_backlog_limiter"
+[tool.poetry.dependencies]
+python = ">=3.12"
 
 
 [build-system]
