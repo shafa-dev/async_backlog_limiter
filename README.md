@@ -34,6 +34,9 @@ async def handle_request():
 
 # Run many tasks
 await asyncio.gather(*[handle_request() for _ in range(20)])
+
+# Get current statistics about the limiter's state
+limiter.stats()
 ```
 
 ## 🧪 Tests
